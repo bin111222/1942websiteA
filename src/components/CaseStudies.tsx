@@ -45,7 +45,7 @@ const caseStudies = [
     image: "/images/portfolio/ai-dashboard.jpg"
   },
   {
-    title: "HKS",
+    title: "HKS Clinic",
     description: "Interactive 3D visualization of deep learning models",
     tags: ["Machine Learning", "WebGL", "Interactive Design"],
     gradient: "from-purple-600/80 to-pink-500/80",
