@@ -1,0 +1,43 @@
+/* Add this at the top of your globals.css */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
+
+/* Optional: Add this if you want to customize the scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+} 
+:root {
+  --sat: env(safe-area-inset-top);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+  --sar: env(safe-area-inset-right);
+}
+
+.pt-safe {
+  padding-top: var(--sat);
+}
+
+.top-safe {
+  top: var(--sat);
+}
+
+body {
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
