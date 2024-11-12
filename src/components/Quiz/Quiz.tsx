@@ -29,171 +29,165 @@ interface Answer extends Option {
 const questions = [
   {
     id: 1,
-    question: "What's your main goal for your digital presence?",
+    question: "Do you currently have a website for your business?",
     options: [
       { 
-        text: "Increase brand awareness", 
-        score: 3,
-        category: "Brand Growth",
-        insight: "Strong potential for comprehensive brand strategy"
-      },
-      { 
-        text: "Generate more leads", 
-        score: 3,
-        category: "Lead Generation",
-        insight: "Perfect for targeted marketing campaigns"
-      },
-      { 
-        text: "Improve online engagement", 
-        score: 3,
-        category: "Engagement",
-        insight: "Great opportunity for content strategy"
-      },
-      { 
-        text: "Just exploring options", 
+        text: "No website at all", 
         score: 1,
-        category: "Exploration",
-        insight: "Good starting point for digital presence"
+        category: "Web Presence",
+        insight: "Perfect starting point for a modern website"
+      },
+      { 
+        text: "Basic website that needs updating", 
+        score: 2,
+        category: "Web Update",
+        insight: "Good opportunity for modernization"
+      },
+      { 
+        text: "Social media pages only", 
+        score: 1,
+        category: "Digital Presence",
+        insight: "Ready to expand online presence"
       }
     ],
-    feedback: "Understanding your goals helps us create the perfect digital strategy.",
-    category: "Digital Goals"
+    feedback: "Understanding your current online presence helps us create the right strategy.",
+    category: "Web Presence"
   },
   {
     id: 2,
-    question: "What type of content do you currently focus on?",
+    question: "What's your main goal for getting online?",
     options: [
       { 
-        text: "Social media and blogs", 
+        text: "Attract more customers", 
         score: 3,
-        category: "Content Creation",
-        insight: "Ready for advanced content strategy"
+        category: "Growth",
+        insight: "Focus on lead generation and visibility"
       },
       { 
-        text: "Photos and videos", 
-        score: 3,
-        category: "Visual Content",
-        insight: "Great foundation for multimedia expansion"
+        text: "Showcase products/services", 
+        score: 2,
+        category: "Showcase",
+        insight: "Portfolio-focused approach needed"
       },
       { 
-        text: "Limited content creation", 
-        score: 1,
-        category: "Content Development",
-        insight: "Opportunity to build content foundation"
+        text: "Improve customer communication", 
+        score: 2,
+        category: "Communication",
+        insight: "Enhanced customer interaction tools"
       }
     ],
-    feedback: "Your content mix influences your digital growth potential.",
-    category: "Content Strategy"
+    feedback: "Your goals will shape the features we prioritize.",
+    category: "Business Goals"
   },
   {
     id: 3,
-    question: "How often do you update your online presence?",
+    question: "How do you currently handle customer inquiries?",
     options: [
       { 
-        text: "Daily updates across platforms", 
-        score: 3,
-        category: "Active Presence",
-        insight: "Perfect for comprehensive strategy"
-      },
-      { 
-        text: "Weekly or monthly updates", 
-        score: 2,
-        category: "Regular Updates",
-        insight: "Good rhythm for content scaling"
-      },
-      { 
-        text: "Occasional updates", 
+        text: "Phone and email only", 
         score: 1,
-        category: "Sporadic Presence",
-        insight: "Opportunity for consistent strategy"
+        category: "Basic Communication",
+        insight: "Ready for digital communication channels"
+      },
+      { 
+        text: "Social media messages", 
+        score: 2,
+        category: "Social Communication",
+        insight: "Can centralize communication"
+      },
+      { 
+        text: "Struggling to manage inquiries", 
+        score: 3,
+        category: "Communication Management",
+        insight: "AI chat support could help"
       }
     ],
-    feedback: "Consistency is key in digital marketing success.",
-    category: "Update Frequency"
+    feedback: "Modern tools can help streamline customer communication.",
+    category: "Customer Service"
   },
   {
     id: 4,
-    question: "What's your current marketing budget allocation?",
+    question: "How often would you like to update your online content?",
     options: [
       { 
-        text: "Dedicated marketing budget", 
+        text: "Regularly (weekly/monthly)", 
         score: 3,
-        category: "Full Investment",
-        insight: "Ready for comprehensive campaign"
+        category: "Active Content",
+        insight: "Content management system needed"
       },
       { 
-        text: "Flexible project-based budget", 
+        text: "Occasionally", 
         score: 2,
-        category: "Project Based",
-        insight: "Good for targeted campaigns"
+        category: "Basic Content",
+        insight: "Simple content tools sufficient"
       },
       { 
-        text: "Limited or exploring budget", 
+        text: "Rarely (yearly)", 
         score: 1,
-        category: "Budget Planning",
-        insight: "Start with essential strategies"
+        category: "Static Content",
+        insight: "Static website with basic updates"
       }
     ],
-    feedback: "Budget planning helps optimize your digital marketing ROI.",
-    category: "Budget Planning"
+    feedback: "Regular content updates help maintain online visibility.",
+    category: "Content Management"
   },
   {
     id: 5,
-    question: "What's your target audience engagement level?",
+    question: "What's your comfort level with technology?",
     options: [
       { 
-        text: "Highly engaged community", 
-        score: 3,
-        category: "Active Community",
-        insight: "Perfect for advanced engagement"
-      },
-      { 
-        text: "Growing engagement", 
-        score: 2,
-        category: "Growing Audience",
-        insight: "Good for engagement strategies"
-      },
-      { 
-        text: "Building audience", 
+        text: "Need everything managed for me", 
         score: 1,
-        category: "Audience Building",
-        insight: "Focus on audience development"
+        category: "Full Service",
+        insight: "Managed solution recommended"
+      },
+      { 
+        text: "Comfortable with basic tools", 
+        score: 2,
+        category: "Semi-Managed",
+        insight: "Balanced support approach"
+      },
+      { 
+        text: "Ready to learn and manage", 
+        score: 3,
+        category: "Self-Managed",
+        insight: "Training and tools setup"
       }
     ],
-    feedback: "Understanding your audience helps create targeted content.",
-    category: "Audience Engagement"
+    feedback: "We'll tailor the solution to your comfort level.",
+    category: "Technical Comfort"
   }
 ];
 
 const resultInterpretations = {
   high: {
-    title: "Digital Marketing Leader",
-    description: "Your brand shows strong potential for advanced digital marketing strategies. You're ready for comprehensive campaigns.",
+    title: "Ready for Digital Growth",
+    description: "You're well-positioned to benefit from a modern online presence with smart automation.",
     recommendations: [
-      "Advanced content strategy",
-      "Multi-platform campaigns",
-      "Influencer collaborations",
-      "Brand storytelling"
+      "Modern, mobile-friendly website",
+      "AI-powered chat support",
+      "Easy content management system",
+      "Social media integration"
     ]
   },
   medium: {
-    title: "Growing Digital Presence",
-    description: "Your digital presence has good foundation with room for strategic growth.",
+    title: "Digital Transformation Ready",
+    description: "A structured approach to building your online presence will help you grow steadily.",
     recommendations: [
-      "Content calendar development",
-      "Engagement strategy",
-      "Platform optimization",
-      "Community building"
+      "Professional website setup",
+      "Basic chat support",
+      "Simple content updates",
+      "Social media presence"
     ]
   },
   low: {
-    title: "Digital Growth Opportunity",
-    description: "You're at the start of your digital journey with great potential for growth.",
+    title: "Starting Your Digital Journey",
+    description: "Let's build a strong foundation for your online presence with the basics done right.",
     recommendations: [
-      "Basic content strategy",
-      "Platform selection",
-      "Audience research",
-      "Brand foundation"
+      "Simple, effective website",
+      "Contact form setup",
+      "Basic business information",
+      "Easy maintenance plan"
     ]
   }
 };

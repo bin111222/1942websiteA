@@ -114,7 +114,7 @@ export const Footer = () => {
         {/* Bottom Bar - Simplified */}
         <div className="border-t border-gray-200 mt-16 pt-8 text-center">
           <p className="text-gray-600 text-sm">
-            © 1942 Studio. All rights reserved. {new Date().getFullYear()} 
+            © 1942 Studio.
           </p>
         </div>
       </div>

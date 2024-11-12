@@ -85,7 +85,7 @@ export const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              Transform Your Digital Presence with AI-Powered Websites, Chatbots, Social Media, and Content Solutions.
+              Transform Your Business with AI-Powered Websites, Chatbots, Social Media, and Content Solutions.
             </motion.p>
 
             {/* Testimonial Slider */}

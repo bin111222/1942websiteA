@@ -42,7 +42,7 @@ const caseStudies = [
     tags: ["AI Integration", "Web Development", "AI Chatbot"],
     gradient: "from-blue-500/80 to-purple-600/80",
     comingSoon: false,
-    image: "/images/portfolio/ai-dashboard.jpg"
+    image: "/images/portfolio/sculptique.png"
   },
   {
     title: "HKS Clinic",
@@ -50,15 +50,15 @@ const caseStudies = [
     tags: ["Machine Learning", "WebGL", "Interactive Design"],
     gradient: "from-purple-600/80 to-pink-500/80",
     comingSoon: false,
-    image: "/images/portfolio/neural-network.jpg"
+    image: "/images/portfolio/hks.png"
   },
   {
     title: "Predictive Maintenance System",
     description: "AI-driven system for industrial equipment monitoring",
     tags: ["IoT", "AI", "Industrial"],
     gradient: "from-cyan-500/80 to-blue-500/80",
-    comingSoon: false,
-    image: "/images/portfolio/predictive-maintenance.jpg"
+    comingSoon: true,
+    image: "/images/portfolio/ai.png"
   }
 ];
 
@@ -119,7 +119,7 @@ function CaseStudyCard({ study, index }: { study: StudyType, index: number }) {
         />
         
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/30 to-transparent" />
       </div>
 
       {/* Content Container */}

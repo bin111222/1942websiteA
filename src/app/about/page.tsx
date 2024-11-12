@@ -36,7 +36,7 @@ const teamMembers = [
     name: "Varil",
     title: "Founder",
     image: "/images/team/varil.webp",
-    description: "The Big Brain"
+    description: "The Brains"
   },
   {
     name: "Axel",
@@ -45,9 +45,9 @@ const teamMembers = [
     description: "Creative Bug"
   },
   {
-    name: "Ava",
+    name: "Nicky",
     title: "Content Specialist",
-    image: "/images/team/ava.webp",
+    image: "/images/team/nicky.webp",
     description: "Master of Words and Storytelling"
   },
   {
@@ -59,13 +59,13 @@ const teamMembers = [
   {
     name: "Agastya",
     title: "AI Chatbot Architect",
-    image: "/images/team/Agastya.webp",
+    image: "/images/team/agastya.webp",
     description: "Conversation Guru"
   },
   {
     name: "Priya",
     title: "Social Media Manager",
-    image: "/images/team/Priya.webp",
+    image: "/images/team/priya.webp",
     description: "Viral Visionary"
   },
   {
