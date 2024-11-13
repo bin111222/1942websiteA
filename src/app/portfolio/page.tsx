@@ -49,8 +49,16 @@ function PortfolioCard({ project, index }: PortfolioCardProps) {
 
           {/* Text Content */}
           <div className="pt-2">
-            <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-purple-500 transition-all duration-300">
-              {project.title}
+            {/* Updated title with layered approach */}
+            <h3 className="relative text-xl font-bold mb-2">
+              {/* Background text layer */}
+              <span className="text-gray-800 transition-opacity duration-300 group-hover:opacity-0">
+                {project.title}
+              </span>
+              {/* Gradient text layer */}
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                {project.title}
+              </span>
             </h3>
             
             <p className="text-gray-600 leading-relaxed mb-3">

@@ -1,6 +1,6 @@
 // src/components/CaseStudies.tsx
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Link from 'next/link';
@@ -16,6 +16,9 @@ import {
   CpuChipIcon,
   WrenchIcon
 } from '@heroicons/react/24/outline';
+import ProjectModal from './ProjectModal';
+import { projects } from '@/data/projects';
+import { Project } from '@/types/project';
 
 // Define containerVariants for Framer Motion
 const containerVariants = {
@@ -33,34 +36,6 @@ const cardVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
-
-// Define caseStudies array
-const caseStudies = [
-  {
-    title: "The Sculptique",
-    description: "Developing an AI-powered website for a world-class aesthetic surgeon",
-    tags: ["AI Integration", "Web Development", "AI Chatbot"],
-    gradient: "from-blue-500/80 to-purple-600/80",
-    comingSoon: false,
-    image: "/images/portfolio/sculptique.png"
-  },
-  {
-    title: "HKS Clinic",
-    description: "Interactive 3D visualization of deep learning models",
-    tags: ["Machine Learning", "WebGL", "Interactive Design"],
-    gradient: "from-purple-600/80 to-pink-500/80",
-    comingSoon: false,
-    image: "/images/portfolio/hks.png"
-  },
-  {
-    title: "Predictive Maintenance System",
-    description: "AI-driven system for industrial equipment monitoring",
-    tags: ["IoT", "AI", "Industrial"],
-    gradient: "from-cyan-500/80 to-blue-500/80",
-    comingSoon: true,
-    image: "/images/portfolio/ai.png"
-  }
-];
 
 // Define tagColors mapping
 const tagColors = {
@@ -88,34 +63,55 @@ const tagIcons = {
   "Industrial": WrenchIcon
 };
 
-// Define StudyType interface
-interface StudyType {
-  title: string;
-  description: string;
-  tags: string[];
-  gradient: string;
-  comingSoon: boolean;
-  image: string;
-}
+// Add this near the top of the file, after the imports
+const FEATURED_PROJECT_IDS = [
+  'thesculptique', // Replace with your actual project IDs
+  'aimedical',
+  'industrialai'
+];
 
 // Action Button for the Case Study Card Component
-function CaseStudyCard({ study, index }: { study: StudyType, index: number }) {
+function CaseStudyCard({ 
+  study, 
+  index, 
+  setSelectedProject 
+}: { 
+  study: Project; 
+  index: number;
+  setSelectedProject: (project: Project | null) => void;
+}) {
+  const handleClick = () => {
+    if (!study.comingSoon) {
+      setSelectedProject(study);
+    }
+  };
+
   return (
     <motion.div
       variants={cardVariants}
       className="group relative overflow-hidden rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full"
+      onClick={handleClick}
+      style={{ cursor: study.comingSoon ? 'default' : 'pointer' }}
     >
       {/* Image Container */}
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative w-full h-[300px]">
         {/* Fallback gradient background */}
         <div className={`absolute inset-0 bg-gradient-to-br ${study.gradient} opacity-50`} />
         
         {/* Project Image */}
         <Image
-          src={study.image || '/images/portfolio/default.jpg'}
+          src={study.image}
           alt={study.title}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
           className="object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
+          onError={(e) => {
+            console.error(`Failed to load image: ${study.image}`);
+            // Optionally set a fallback image
+            const imgElement = e.target as HTMLImageElement;
+            imgElement.src = '/images/fallback.jpg';
+          }}
         />
         
         {/* Gradient Overlay */}
@@ -133,8 +129,15 @@ function CaseStudyCard({ study, index }: { study: StudyType, index: number }) {
         <div className="flex flex-col h-full">
           {/* Title and Description */}
           <div>
-            <h3 className="text-2xl font-bold mb-2 text-gray-800 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-purple-500 transition-all duration-300">
-              {study.title}
+            <h3 className="relative text-2xl font-bold mb-2">
+              {/* Background text layer */}
+              <span className="text-gray-800 transition-opacity duration-300 group-hover:opacity-0">
+                {study.title}
+              </span>
+              {/* Gradient text layer */}
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                {study.title}
+              </span>
             </h3>
             
             <p className="text-gray-600 leading-relaxed">
@@ -161,22 +164,20 @@ function CaseStudyCard({ study, index }: { study: StudyType, index: number }) {
 
             {/* View Case Study Link */}
             {!study.comingSoon && (
-              <Link href={`/case-studies/${encodeURIComponent(study.title.toLowerCase().replace(/\s+/g, '-'))}`} legacyBehavior>
-                <motion.a
-                  whileHover={{ x: 5 }}
-                  className="inline-flex items-center gap-2 text-blue-500 font-medium hover:text-purple-500 transition-colors duration-300"
+              <motion.button
+                whileHover={{ x: 5 }}
+                className="inline-flex items-center gap-2 text-blue-500 font-medium hover:text-purple-500 transition-colors duration-300"
+              >
+                View Case Study
+                <svg 
+                  className="w-4 h-4" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
                 >
-                  View Case Study
-                  <svg 
-                    className="w-4 h-4" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </motion.a>
-              </Link>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </motion.button>
             )}
           </div>
         </div>
@@ -187,23 +188,129 @@ function CaseStudyCard({ study, index }: { study: StudyType, index: number }) {
 
       {/* Coming Soon Overlay */}
       {study.comingSoon && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/90 backdrop-blur-sm">
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-white/95 to-white/98 backdrop-blur-md z-10">
           <motion.div
-            animate={{ 
-              scale: [1, 1.05, 1],
-              opacity: [0.8, 1, 0.8] 
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity,
-              ease: "easeInOut" 
-            }}
-            className="flex flex-col items-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="relative flex flex-col items-center"
           >
-            <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
-              Coming Soon
-            </span>
-            <div className="mt-2 w-16 h-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
+            {/* Animated rings */}
+            <motion.div
+              className="absolute inset-0 -z-10"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{
+                opacity: [0.2, 0.4, 0.2],
+                scale: [1, 1.2, 1],
+                rotate: [0, 180, 360]
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
+              <div className="absolute inset-0 rounded-full border-2 border-blue-500/20 blur-sm" />
+              <div className="absolute inset-4 rounded-full border-2 border-purple-500/20 blur-sm" />
+              <div className="absolute inset-8 rounded-full border-2 border-pink-500/20 blur-sm" />
+            </motion.div>
+
+            {/* Main content container */}
+            <motion.div
+              className="relative z-10 bg-white/80 backdrop-blur-lg rounded-2xl p-8 shadow-xl"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              {/* Glowing effect */}
+              <motion.div
+                className="absolute -inset-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-20 blur-2xl"
+                animate={{
+                  opacity: [0.2, 0.3, 0.2],
+                  scale: [0.95, 1.05, 0.95]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+
+              {/* Text content */}
+              <div className="relative flex flex-col items-center">
+                <motion.div
+                  className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 leading-tight pb-2"
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  style={{ backgroundSize: "200% 200%" }}
+                >
+                  Revealing Soon
+                </motion.div>
+
+                <motion.div
+                  className="mt-4 h-1 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{
+                    duration: 1,
+                    delay: 0.5,
+                    ease: "easeOut"
+                  }}
+                />
+
+                <motion.p
+                  className="mt-4 text-gray-600 text-center max-w-[200px]"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1 }}
+                >
+                  This project is currently
+                  <motion.span
+                    className="block font-semibold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    under R&D
+                  </motion.span>
+                </motion.p>
+              </div>
+            </motion.div>
+
+            {/* Floating particles */}
+            <div className="absolute inset-0 overflow-hidden">
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
+                  initial={{
+                    x: Math.random() * 100 - 50,
+                    y: Math.random() * 100 - 50,
+                    scale: 0
+                  }}
+                  animate={{
+                    x: Math.random() * 200 - 100,
+                    y: Math.random() * 200 - 100,
+                    scale: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: Math.random() * 3 + 2,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut",
+                    delay: Math.random() * 2
+                  }}
+                />
+              ))}
+            </div>
           </motion.div>
         </div>
       )}
@@ -217,64 +324,85 @@ function CaseStudyCard({ study, index }: { study: StudyType, index: number }) {
       triggerOnce: true,
       threshold: 0.1,
     });
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  
+    // Filter projects to show only featured ones
+    const featuredProjects = projects.filter(project => 
+      FEATURED_PROJECT_IDS.includes(project.id)
+    ).slice(0, 3); // Ensure we only show 3 projects max
   
     return (
-      <section className="py-20 sm:py-32 relative overflow-hidden" ref={ref}>
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
-          <motion.div
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            variants={containerVariants}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16 sm:mb-20"
-          >
-            <motion.span 
-              variants={cardVariants}
-              className="inline-block px-6 py-3 rounded-full text-lg font-semibold bg-blue-500/10 text-blue-500 border border-blue-500/20 mb-8"
+      <>
+        <section className="py-20 sm:py-32 relative overflow-hidden" ref={ref}>
+          <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Header */}
+            <motion.div
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              variants={containerVariants}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16 sm:mb-20"
             >
-              Featured Case Studies
-            </motion.span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
-              Our Success Stories
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover how we've helped businesses transform with AI-driven solutions.
-            </p>
-          </motion.div>
-  
-          {/* Case Studies Grid */}
-          <motion.div
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            variants={containerVariants}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {caseStudies.map((study, index) => (
-              <CaseStudyCard key={study.title} study={study} index={index} />
-            ))}
-          </motion.div>
-  
-          {/* Call-to-Action Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-center mt-16 sm:mt-20"
-          >
-            <Link href="/portfolio" legacyBehavior>
-              <motion.a
-                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(45,108,223,0.3)" }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block px-8 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium text-lg shadow-lg transition-transform duration-200"
-                aria-label="View all case studies"
+              <motion.span 
+                variants={cardVariants}
+                className="inline-block px-6 py-3 rounded-full text-lg font-semibold bg-blue-500/10 text-blue-500 border border-blue-500/20 mb-8"
               >
-                View All Case Studies
-              </motion.a>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+                Featured Case Studies
+              </motion.span>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+                Our Success Stories
+              </h2>
+              <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+                Discover how we've helped businesses transform with AI-driven solutions.
+              </p>
+            </motion.div>
+  
+            {/* Case Studies Grid */}
+            <motion.div
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              variants={containerVariants}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {featuredProjects.map((project, index) => (
+                <CaseStudyCard 
+                  key={project.title} 
+                  study={project} 
+                  index={index}
+                  setSelectedProject={setSelectedProject}
+                />
+              ))}
+            </motion.div>
+  
+            {/* Call-to-Action Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-center mt-16 sm:mt-20"
+            >
+              <Link href="/portfolio" legacyBehavior>
+                <motion.a
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(45,108,223,0.3)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-block px-8 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium text-lg shadow-lg transition-transform duration-200"
+                  aria-label="View all case studies"
+                >
+                  View All Case Studies
+                </motion.a>
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Add ProjectModal */}
+        {selectedProject && (
+          <ProjectModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
+      </>
     );
   }
   

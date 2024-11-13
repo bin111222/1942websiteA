@@ -9,16 +9,18 @@ interface ServiceCardProps {
   gradient: string;
   delay?: number;
   isMobile?: boolean;
+  onClick: () => void;
 }
 
-function ServiceCard({ title, description, icon: Icon, gradient, delay = 0, isMobile = false }: ServiceCardProps) {
+function ServiceCard({ title, description, icon: Icon, gradient, delay = 0, isMobile = false, onClick }: ServiceCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: isMobile ? 0.3 : 0.5, delay }}
-      className="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300"
+      className="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+      onClick={onClick}
     >
       {/* Gradient Overlay */}
       <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
@@ -36,8 +38,15 @@ function ServiceCard({ title, description, icon: Icon, gradient, delay = 0, isMo
 
       {/* Text Content */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold text-gray-800 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-purple-500 transition-all duration-300">
-          {title}
+        <h3 className="text-xl font-bold relative">
+          {/* Background text layer */}
+          <span className="text-gray-800 transition-opacity duration-300 group-hover:opacity-0">
+            {title}
+          </span>
+          {/* Gradient text layer */}
+          <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            {title}
+          </span>
         </h3>
         
         <p className="text-gray-600 leading-relaxed">

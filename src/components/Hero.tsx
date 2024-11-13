@@ -64,7 +64,7 @@ export const Hero = () => {
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               <span className="px-6 py-3 rounded-full text-lg md:text-xl font-semibold bg-blue-500/10 text-blue-500 border border-blue-500/20">
-                AI-Powered Solutions
+                AI-Powered Boutique Creative Studio
               </span>
             </motion.div>
             

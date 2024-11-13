@@ -11,11 +11,11 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: '1942 Studio | AI-Powered Digital Solutions & Web Development',
+  title: '1942 Studio | AI-Powered Boutique Creative Studio',
   description: 'Transform your digital presence with AI-powered websites, chatbots, social media, and content solutions. Expert web development and AI integration services.',
   keywords: 'AI solutions, web development, digital transformation, chatbots, content creation, AI integration',
   openGraph: {
-    title: '1942 Studio | AI-Powered Digital Studio',
+    title: '1942 Studio | AI-Powered Boutique Creative Studio',
     description: 'Transform your digital presence with AI-powered solutions',
     url: 'https://1942studio.com', // Replace with your actual domain
     siteName: '1942 Studio',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Innovate | AI-Powered Digital Solutions',
+    title: '1942 Studio | AI-Powered Boutique Creative Studio',
     description: 'Transform your digital presence with AI-powered solutions',
     images: ['/twitter-image.png'], // Add your Twitter card image
   },

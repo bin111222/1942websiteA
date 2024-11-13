@@ -6,6 +6,9 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
+// Add z-index constant
+const NAVBAR_Z_INDEX = 40;
+
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -39,8 +42,12 @@ export const Navbar = () => {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      style={{ opacity }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      style={{ 
+        opacity,
+        pointerEvents: opacity === 0 ? 'none' : 'auto',
+        zIndex: NAVBAR_Z_INDEX // Set explicit z-index
+      }}
+      className={`fixed top-0 left-0 right-0 transition-all duration-300 ${
         isScrolled 
           ? 'bg-white/30 backdrop-blur-xl border-b border-white/20' 
           : 'bg-transparent'

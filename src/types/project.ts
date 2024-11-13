@@ -3,39 +3,35 @@ interface Challenge {
 }
 
 export interface Project {
+  id: string;
   title: string;
   category: string;
   description: string;
   fullDescription: string;
   image: string;
-  link: string;
   tags: string[];
+  link: string;
   gradient: string;
   comingSoon: boolean;
   challenges?: (string | Challenge)[];
-  solutions: {
+  solutions: Array<{
     title: string;
     description: string;
     icon: string;
-  }[];
-  results?: {
+  }>;
+  results?: Array<{
     metric: string;
     description: string;
-  }[];
-  process?: {
-    phase: string;
-    duration: string;
-    description: string;
-    deliverables?: string[];
-  }[];
-  gallery?: {
+  }>;
+  gallery: Array<{
     url: string;
     title: string;
-    description?: string;
-  }[];
-  technologies?: {
-    name: string;
-    icon: string;
-    category: string;
-  }[];
+    description: string;
+  }>;
+  process: Array<{
+    phase: string;
+    description: string;
+    duration: string;
+    deliverables?: string[];
+  }>;
 } 

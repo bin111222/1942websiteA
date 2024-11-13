@@ -3,6 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { Project } from '@/types/project';
 import Image from 'next/image';
+import { XMarkIcon } from '@heroicons/react/24/solid';
+import { ChevronLeftIcon } from '@heroicons/react/24/solid';
+import { ChevronRightIcon } from '@heroicons/react/24/solid';
+import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -13,12 +17,14 @@ const Z_INDICES = {
   MODAL: 99999,
   MODAL_CONTENT: 100000,
   GALLERY: 100001,
-  BACK_BUTTON: 100002
+  BACK_BUTTON: 100001
 };
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedImage, setSelectedImage] = useState<null | { url: string; title: string; description?: string }>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const parseDuration = (duration: string) => {
     const number = parseInt(duration.split(' ')[0]);
@@ -35,9 +41,25 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         }
       }
     };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImage && project?.gallery) {
+        if (e.key === 'ArrowLeft') {
+          setCurrentImageIndex((prev) => (prev - 1 + project.gallery.length) % project.gallery.length);
+        } else if (e.key === 'ArrowRight') {
+          setCurrentImageIndex((prev) => (prev + 1) % project.gallery.length);
+        }
+      }
+    };
+
     window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, [onClose, selectedImage]);
+    window.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose, selectedImage, project?.gallery?.length]);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -88,6 +110,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               fill
               className="object-cover"
               priority
+              onError={(e) => {
+                console.error(`Failed to load hero image: ${project.image}`);
+                const imgElement = e.target as HTMLImageElement;
+                imgElement.src = '/images/fallback.jpg'; // Make sure to have a fallback image
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60" />
             
@@ -122,7 +149,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
 
           {/* Tabs Navigation */}
-          <div className="sticky top-0 bg-white border-b border-gray-200 z-10">
+          <div className="sticky top-0 bg-white border-b border-gray-200" style={{ zIndex: Z_INDICES.MODAL_CONTENT }}>
             <div className="max-w-7xl mx-auto px-6">
               <nav className="-mb-px flex space-x-8 overflow-x-auto" aria-label="Tabs">
                 {tabs.map((tab) => (
@@ -131,6 +158,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     onClick={() => setActiveTab(tab.id)}
                     className={`
                       whitespace-nowrap py-6 px-1 border-b-2 font-medium text-sm
+                      transition-all duration-300
                       ${activeTab === tab.id
                         ? 'border-blue-500 text-blue-600'
                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -180,12 +208,17 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 {project.solutions.map((solution, index) => (
                   <div
                     key={index}
-                    className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
+                    className="group bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
                   >
                     <div className="flex items-center gap-4 mb-4">
                       <span className="text-3xl">{solution.icon}</span>
-                      <h3 className="font-bold text-xl text-gray-800">
-                        {solution.title}
+                      <h3 className="relative font-bold text-xl">
+                        <span className="text-gray-800 transition-opacity duration-300 group-hover:opacity-0">
+                          {solution.title}
+                        </span>
+                        <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                          {solution.title}
+                        </span>
                       </h3>
                     </div>
                     <p className="text-gray-600 text-lg leading-relaxed">
@@ -229,6 +262,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                       alt={image.title}
                       fill
                       className="object-cover"
+                      onError={(e) => {
+                        console.error(`Failed to load gallery image: ${image.url}`);
+                        const imgElement = e.target as HTMLImageElement;
+                        imgElement.src = '/images/fallback.jpg';
+                      }}
                     />
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <p className="text-white text-lg font-medium px-6 text-center">
@@ -250,11 +288,16 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     <div key={index} className="relative pl-16">
                       <div className="absolute left-[29px] w-4 h-4 rounded-full bg-white border-2 border-blue-500 shadow-lg" />
                       
-                      <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                      <div className="group bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
                         <div className="flex items-center justify-between mb-4">
                           <div>
-                            <h3 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                              {step.phase}
+                            <h3 className="relative text-xl font-bold">
+                              <span className="text-gray-800 transition-opacity duration-300 group-hover:opacity-0">
+                                {step.phase}
+                              </span>
+                              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                {step.phase}
+                              </span>
                             </h3>
                             <span className="inline-block mt-1 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
                               {step.duration}
@@ -365,6 +408,74 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Fullscreen Image */}
+      {isFullscreen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
+          {!isFullscreen ? (
+            // Regular view
+            <div className="relative max-w-[900px] w-full mx-auto">
+              <div className="relative w-full h-[600px]">
+                <Image
+                  src={project.gallery[currentImageIndex].url}
+                  alt={`Gallery image ${currentImageIndex + 1}`}
+                  fill
+                  className="object-contain cursor-zoom-in"
+                  onClick={() => setIsFullscreen(true)}
+                />
+              </div>
+              
+              {/* Back to Projects button */}
+              <button
+                onClick={onClose}
+                className="absolute -bottom-16 left-4 flex items-center gap-2 text-white hover:text-gray-300 transition-colors"
+              >
+                <ArrowLeftIcon className="w-5 h-5" />
+                Back to Projects
+              </button>
+            </div>
+          ) : (
+            // Fullscreen view
+            <div className="fixed inset-0 z-60 bg-black flex items-center justify-center">
+              <Image
+                src={project.gallery[currentImageIndex].url}
+                alt={`Gallery image ${currentImageIndex + 1}`}
+                fill
+                className="object-contain cursor-zoom-out"
+                onClick={() => setIsFullscreen(false)}
+              />
+              
+              {/* Navigation arrows */}
+              <button
+                onClick={() => setCurrentImageIndex(prev => prev === 0 ? project.gallery.length - 1 : prev - 1)}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full text-white hover:bg-black/70 transition-colors"
+              >
+                <ChevronLeftIcon className="w-6 h-6" />
+              </button>
+              
+              <button
+                onClick={() => setCurrentImageIndex(prev => prev === project.gallery.length - 1 ? 0 : prev + 1)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full text-white hover:bg-black/70 transition-colors"
+              >
+                <ChevronRightIcon className="w-6 h-6" />
+              </button>
+
+              {/* Close fullscreen button */}
+              <button
+                onClick={() => setIsFullscreen(false)}
+                className="absolute top-4 right-4 text-white p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
+              >
+                <XMarkIcon className="w-6 h-6" />
+              </button>
+
+              {/* Image counter */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 px-3 py-1 rounded-full text-white">
+                {currentImageIndex + 1} / {project.gallery.length}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>

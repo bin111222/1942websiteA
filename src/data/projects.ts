@@ -2,132 +2,112 @@ import { Project } from '@/types/project';
 
 export const projects: Project[] = [
   {
+    id: 'thesculptique',
     title: "The Sculptique",
-    category: "AI Healthcare",
+    category: "Aesthetic Healthcare",
     description: "Developing an AI-powered website for a world-class aesthetic surgeon",
-    fullDescription: "The Sculptique represents a breakthrough in aesthetic healthcare technology...",
-    image: "/images/portfolio/sculptique.png",
+    fullDescription: "The Sculptique is a modern, high-end aesthetic plastic surgery brand aiming to establish a unique online presence that goes beyond conventional medical websites. The goal is to reflect the brand’s sophistication, innovation, and customer-centered approach.",
+    image: "/images/portfolio/thesculptique.png",
     tags: ["AI Integration", "Web Development", "AI Chatbot"],
-    link: "/portfolio/sculptique",
+    link: "/portfolio/thesculptique.png",
     gradient: "from-blue-600 to-purple-600",
     comingSoon: false,
     challenges: [
-      "Integration of complex medical knowledge with AI systems to give accuration information",
-      "Ensuring HIPAA compliance and data security",
-      "Creating an intuitive interface for medical procedures",
-      "Real-time consultation scheduling system",
-      "Multi-language support for international patients"
+        "Create a distinctive digital identity to craft a visually compelling website that resonates with an audience seeking premium aesthetic services",
+        "Ensure user-friendly navigation to provide an intuitive and seamless user experience, emphasizing easy access to information on services, qualifications, and patient testimonials",
+        "Showcase brand trust and authority by highlighting credentials, experience, and professional achievements to foster trust and credibility",
+        "Incorporate advanced technology with innovative features like AI-powered chatbots to enhance customer service and engagement",
     ],
     solutions: [
       {
-        title: "AI-Powered Consultation",
-        description: "Implemented advanced natural language processing for patient queries",
+        title: "AI-Powered Website",
+        description: "Implemented real-time accurate medical grade information for all services",
         icon: "🤖"
       },
       {
-        title: "Secure Infrastructure",
-        description: "Built HIPAA-compliant data handling with encrypted storage",
+        title: "Advanced SEO Techniques",
+        description: "Going above and beyond to ensure the website is found by search engines",
         icon: "🔒"
       },
       {
         title: "Interactive UI",
-        description: "Developed an intuitive interface with 3D procedure visualizations",
+        description: "Developed an intuitive interface for easy navigation and information access",
         icon: "💻"
+      },
+      {
+        title: "AI-Powered Chatbot",
+        description: "Developed an intuitive AI chatbot for patient engagement and information access",
+        icon: "📲"
       }
     ],
     results: [
       {
-        metric: "200%",
+        metric: "30%",
         description: "Increase in online consultations"
       },
       {
-        metric: "40%",
+        metric: "75%",
         description: "Reduction in administrative work"
       },
       {
-        metric: "95%",
+        metric: "90%",
         description: "Patient satisfaction rate"
       }
     ],
     gallery: [
       {
-        url: "/images/portfolio/sculptique/homepage.png",
+        url: "/images/projects/sculptique/1.webp",
         title: "Homepage Design",
-        description: "Modern and clean homepage design focusing on user experience"
+        description: "Modern and clean web design focusing on user experience"
       },
       {
-        url: "/images/portfolio/sculptique/consultation.png",
+        url: "/images/projects/sculptique/2.webp",
         title: "AI Consultation Interface",
         description: "Interactive consultation system with real-time responses"
       },
       {
-        url: "/images/portfolio/sculptique/dashboard.png",
-        title: "Patient Dashboard",
-        description: "Comprehensive dashboard for tracking treatment progress"
+        url: "/images/projects/sculptique/3.webp",
+        title: "Advanced SEO Articles",
+        description: "Advanced SEO articles to ensure the website is found by search engines"
       }
     ],
-    technologies: [
-      {
-        name: "Next.js",
-        icon: "/icons/nextjs.svg",
-        category: "Frontend"
-      },
-      {
-        name: "TensorFlow",
-        icon: "/icons/tensorflow.svg",
-        category: "AI/ML"
-      },
-      {
-        name: "OpenAI",
-        icon: "/icons/openai.svg",
-        category: "AI/ML"
-      },
-      {
-        name: "AWS Healthcare",
-        icon: "/icons/aws.svg",
-        category: "Infrastructure"
-      },
-      {
-        name: "MongoDB",
-        icon: "/icons/mongodb.svg",
-        category: "Database"
-      }
-    ],
+    
     process: [
       {
         phase: "Discovery",
-        description: "Extensive research on healthcare AI requirements",
-        duration: "2 weeks"
+        description: "Extensive research on the business niche and topics that resonate with the target audience",
+        duration: "1 week"
       },
       {
         phase: "Design",
-        description: "UI/UX design with focus on medical accessibility",
-        duration: "3 weeks"
+        description: "UI/UX design with focus on ease to use and intuitive navigation",
+        duration: "2 weeks"
       },
       {
         phase: "Development",
         description: "Agile development with continuous integration",
-        duration: "12 weeks"
+        duration: "2 weeks"
       },
       {
         phase: "Testing",
         description: "Rigorous security and compliance testing",
-        duration: "4 weeks"
+        duration: "2 weeks"
       },
       {
         phase: "Deployment",
         description: "Phased rollout with monitoring",
-        duration: "2 weeks"
+        duration: "1 week"
       }
     ]
   },
   {
+    id: 'aimedical',
     title: "HKS Clinic",
-    category: "Healthcare",
-    description: "A comprehensive digital platform for one of Mumbai's premier dermatology clinics.",
+    category: "Bone Healthcare",
+    description: "A comprehensive digital platform for one of Mumbai's premier orthopedic clinics.",
     fullDescription: "HKS Clinic's digital transformation project focuses on streamlining patient experiences and clinic operations.",
     image: "/images/portfolio/hks-clinic.png",
-    gradient: "from-blue-400 to-cyan-500",
+    gradient: "from-blue-600 to-purple-600",
     tags: ["Web Development", "Clinic Management", "Patient Portal"],
     link: "/portfolio/hks-clinic",
     challenges: [
@@ -148,6 +128,23 @@ export const projects: Project[] = [
         icon: "👥"
       }
     ],
+    gallery: [
+        {
+          url: "/images/projects/hks-clinic/1.webp",
+          title: "Homepage Design",
+          description: "Modern and clean homepage design focusing on user experience"
+        },
+        {
+          url: "/images/projects/hks-clinic/2.webp",
+          title: "AI Consultation Interface",
+          description: "Interactive consultation system with real-time responses"
+        },
+        {
+          url: "/images/projects/hks-clinic/3.webp",
+          title: "Patient Dashboard",
+          description: "Comprehensive dashboard for tracking treatment progress"
+        }
+    ],
     process: [
       {
         phase: "Planning",
@@ -162,12 +159,13 @@ export const projects: Project[] = [
         deliverables: ["Core Platform", "Patient Portal", "Admin Dashboard"]
       }
     ],
-    comingSoon: true
+    comingSoon: false
   },
   {
-    title: "Facile Skin",
+    id: 'industrialai',
+    title: "Industrial AI Platform",
     category: "Skincare Tech",
-    description: "Revolutionary skincare platform combining AI diagnostics with personalized treatment.",
+    description: "Stunning skincare product visuals powered by AI",
     fullDescription: "Facile Skin is pioneering the future of personalized skincare through advanced AI technology and expert dermatological knowledge.",
     image: "/images/portfolio/facile-skin.png",
     gradient: "from-pink-500 to-rose-500",
@@ -205,9 +203,28 @@ export const projects: Project[] = [
         deliverables: ["Core Platform", "AI Integration", "E-commerce System"]
       }
     ],
+
+gallery: [
+    {
+      url: "/images/projects/facile-skin/1.webp",
+      title: "Homepage Design",
+      description: "Modern and clean homepage design focusing on user experience"
+    },
+    {
+        url: "/images/projects/facile-skin/2.webp",
+      title: "AI Consultation Interface",
+      description: "Interactive consultation system with real-time responses"
+    },
+    {
+      url: "/images/projects/facile-skin/3.webp",
+        title: "Patient Dashboard",
+        description: "Comprehensive dashboard for tracking treatment progress"
+        }
+    ],
     comingSoon: true
   },
   {
+    id: 'dr-chirag',
     title: "Dr. Chirag Shah",
     category: "Medical Portfolio",
     description: "A state-of-the-art digital presence for a leading dermatologist, showcasing expertise and facilitating patient engagement.",
@@ -246,6 +263,13 @@ export const projects: Project[] = [
         duration: "6 weeks",
         description: "Website development with focus on user experience",
         deliverables: ["Portfolio Website", "Resource Center", "Contact System"]
+      }
+    ],
+    gallery: [
+      {
+        url: "/images/projects/dr-chirag/1.webp",
+        title: "Portfolio Homepage",
+        description: "Professional portfolio showcasing expertise"
       }
     ],
     comingSoon: true
